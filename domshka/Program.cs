@@ -11,6 +11,8 @@ namespace domshka
 
             /*
              * если просит ввести цифру надо ввести цифру , иначе будет краш. буду думать в сторону while
+             * 
+             * главное 3тье задание запони навсегда
              */
             #region menu 
             /// <summary>
@@ -202,7 +204,7 @@ namespace domshka
                         into = 0; // условие не выполнено, даем введенному значению 0
                 }
 
-                flag = false; // Избавляемся от бага.
+                flag = false; // Избавляемся от бага. // запомни это 
                 score = score + into; // Прибавляем к сумме чисел новое число прошедшее условие проверки на + и нечет
 
                 if (input == 0) break; // Выход из вечного цикла:
@@ -228,7 +230,7 @@ namespace domshka
             string u_name = Console.ReadLine(); // запоминаем логин в юнейм
             Console.Write("Введите пароль: ");
             string u_pass = Console.ReadLine(); // запоминаем пароль в юпасс
-            int i = 2; // количество попыток
+            int counter = 2; // количество попыток
 
 
 
@@ -236,21 +238,25 @@ namespace domshka
             {
                 Console.Clear(); // Чистка консоли
 
-                if (val_user(u_name) == false)  // Проверка логина и пароля
+                if (val_user(u_name) == false)  // Проверка логина и пароля причем проверяет логин, а пароль уже проверяется в методе логина вызовом заранее созданого метода, мне интиресно
+                                                // насколько важно описывать методы вызываемые в главном до главного метода, я их описываю после.
                 {
-                    if (i <= 0) // Лимит попыток
+                    if (counter <= 0) // счетчик попыток
                     {
+                        Console.SetCursorPosition(13, 10);
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine("ТЫ ИСЧЕРПАЛ ПОПЫТКИ!");
                         Console.SetCursorPosition(10, 15);
                         Console.ForegroundColor = ConsoleColor.Blue;
                         Console.WriteLine("THE FORCE BE WITH U... SEE YA LATER");
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("логин root был");
-                        break; // выход из цикла
+                        break; // выход из цикла // ++++
                     }
                     else
                     {
-                        Console.WriteLine($"Я в тебя верю, у тебя осталось попыток - {i}"); // Вывод номера попытки ввода данных
-                        i = i - 1; // операция инкремента
+                        Console.WriteLine($"Я в тебя верю, у тебя осталось попыток : {counter}"); // покажет сколько попыток осталось 
+                        counter = counter - 1; // операция инкремента
                         Console.SetCursorPosition(10, 15);
                         Console.ForegroundColor = ConsoleColor.Blue;
                         Console.WriteLine("THE FORCE BE WITH U... SEE YA LATER");
