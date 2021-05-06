@@ -356,19 +356,47 @@ namespace domshka
 ИМТ >= 40: 	Ожирение III степени
             */
             double i_id;
+            double i_id_up;
             double we_1 ;
+            double we_2;
             if (I < 18.5) { 
                 Console.WriteLine("Ниже нормального веса");
                  i_id = 18.5 - I;
+                i_id_up = 25 - I;
                 we_1= i_id * (Math.Pow(high / 100, 2));
-                Console.WriteLine("Вам стоит набрать минимум " + we_1 + " кг для нормального веста. ");
+                we_2= i_id_up * (Math.Pow(high / 100, 2));
+                Console.WriteLine("Вам стоит набрать минимум " + we_1 + " кг для нормального веса. но не больше  " + we_2);
               
             }
             else if (I >= 18.5 && I < 25 ) { Console.WriteLine("Нормальный вес"); }
-            else if (I >= 25 && I < 30) { Console.WriteLine("Избыточный вес"); }
-            else if (I >= 30 && I < 35) { Console.WriteLine("Ожирение I степени"); }
-            else if (I >= 35 && I < 40) { Console.WriteLine("Ожирение II степени"); }
-            else if (I >= 40 ) { Console.WriteLine("Ожирение II степени"); }
+            else if (I >= 25 && I < 30) { Console.WriteLine("Избыточный вес");
+                i_id = 25 - I;
+                i_id_up = 30 - I;
+                we_1 = i_id * (Math.Pow(high / 100, 2));
+                we_2 = i_id_up * (Math.Pow(high / 100, 2));
+                Console.WriteLine("Вам стоит сбросить минимум " + we_1 + " кг для нормального веса. но не больше  " + we_2);
+            }
+            else if (I >= 30 && I < 35) { Console.WriteLine("Ожирение I степени");
+                i_id = 25 - I;
+                i_id_up = 30 - I;
+                we_1 = i_id * (Math.Pow(high / 100, 2));
+                we_2 = i_id_up * (Math.Pow(high / 100, 2));
+                Console.WriteLine("Вам стоит сбросить минимум " + we_1 + " кг для нормального веса. но не больше  " + we_2);
+            }
+            else if (I >= 35 && I < 40) { Console.WriteLine("Ожирение II степени");
+                i_id = 25 - I;
+                i_id_up = 30 - I;
+                we_1 = i_id * (Math.Pow(high / 100, 2));
+                we_2 = i_id_up * (Math.Pow(high / 100, 2));
+                Console.WriteLine("Вам стоит сбросить минимум " + we_1 + " кг для нормального веса. но не больше  " + we_2);
+            }
+            else if (I >= 40 ) { Console.WriteLine("Ожирение III степени");
+                i_id = 25 - I;
+                i_id_up = 30 - I;
+                we_1 = i_id * (Math.Pow(high / 100, 2));
+                we_2 = i_id_up * (Math.Pow(high / 100, 2));
+                Console.WriteLine("Вам стоит сбросить минимум " + we_1 + " кг для нормального веса. но не больше  " + we_2);
+            }
             else { Console.WriteLine("неведомая хуйня"); }
 
 
