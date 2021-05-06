@@ -359,6 +359,10 @@ namespace domshka
             double i_id_up;
             double we_1;
             double we_2;
+            i_id = 18.5 - I; // i_id разница между желаемым минимум и фактическим значением
+            i_id_up = 25 - I; //i_id_up разница между желаемым максимумом и фактическим значением
+            we_1 = i_id * (Math.Pow(high / 100, 2)); // we_1 это вес который необходимо добавить до порого идеального минимума
+            we_2 = i_id_up * (Math.Pow(high / 100, 2)); // we_2 это вес который необходимо добавить до порого идеального максимума
 
             if (I < 18.5)
             {
@@ -374,21 +378,30 @@ namespace domshka
             else if (I >= 25 && I < 30)
             {
                 Console.WriteLine("Избыточный вес");
-                i_id = 25 - I;
-                i_id_up = 18.5 - I;
-                we_1 = i_id * (Math.Pow(high / 100, 2));
-                we_2 = i_id_up * (Math.Pow(high / 100, 2));
+                //i_id = 25 - I;
+                //i_id_up = 18.5 - I;
+                //we_1 = i_id * (Math.Pow(high / 100, 2));
+                //we_2 = i_id_up * (Math.Pow(high / 100, 2));
+                we_1 = we_1 + we_2;
+                we_2 = we_1 - we_2;
+                we_1 = we_1 - we_2;
                 we_1 = -we_1;
                 we_2 = -we_2;
+               
                 Console.WriteLine("Вам стоит сбросить минимум " + we_1 + " кг для нормального веса. но не больше  " + we_2);
             }
             else if (I >= 30 && I < 35)
             {
                 Console.WriteLine("Ожирение I степени");
-                i_id = 25 - I;
-                i_id_up = 18.5 - I;
-                we_1 = i_id * (Math.Pow(high / 100, 2));
-                we_2 = i_id_up * (Math.Pow(high / 100, 2));
+                //i_id = 25 - I;
+                //i_id_up = 18.5 - I;
+                //we_1 = i_id * (Math.Pow(high / 100, 2));
+                //we_2 = i_id_up * (Math.Pow(high / 100, 2));
+                //we_1 = -we_1;
+                //we_2 = -we_2;
+                we_1 = we_1 + we_2;
+                we_2 = we_1 - we_2;
+                we_1 = we_1 - we_2;
                 we_1 = -we_1;
                 we_2 = -we_2;
                 Console.WriteLine("Вам стоит сбросить минимум " + we_1 + " кг для нормального веса. но не больше  " + we_2);
@@ -396,10 +409,15 @@ namespace domshka
             else if (I >= 35 && I < 40)
             {
                 Console.WriteLine("Ожирение II степени");
-                i_id = 25 - I;
-                i_id_up = 18.5 - I;
-                we_1 = i_id * (Math.Pow(high / 100, 2));
-                we_2 = i_id_up * (Math.Pow(high / 100, 2));
+                //i_id = 25 - I;
+                //i_id_up = 18.5 - I;
+                //we_1 = i_id * (Math.Pow(high / 100, 2));
+                //we_2 = i_id_up * (Math.Pow(high / 100, 2));
+                //we_1 = -we_1;
+                //we_2 = -we_2;
+                we_1 = we_1 + we_2;
+                we_2 = we_1 - we_2;
+                we_1 = we_1 - we_2;
                 we_1 = -we_1;
                 we_2 = -we_2;
                 Console.WriteLine("Вам стоит сбросить минимум " + we_1 + " кг для нормального веса. но не больше  " + we_2);
@@ -407,10 +425,15 @@ namespace domshka
             else if (I >= 40)
             {
                 Console.WriteLine("Ожирение III степени");
-                i_id = 25 - I;
-                i_id_up = 18.5 - I;
-                we_1 = i_id * (Math.Pow(high / 100, 2));
-                we_2 = i_id_up * (Math.Pow(high / 100, 2));
+                //i_id = 25 - I;
+                //i_id_up = 18.5 - I;
+                //we_1 = i_id * (Math.Pow(high / 100, 2));
+                //we_2 = i_id_up * (Math.Pow(high / 100, 2));
+                //we_1 = -we_1;
+                //we_2 = -we_2;
+                we_1 = we_1 + we_2;
+                we_2 = we_1 - we_2;
+                we_1 = we_1 - we_2;
                 we_1 = -we_1;
                 we_2 = -we_2;
                 Console.WriteLine("Вам стоит сбросить минимум " + we_1 + " кг для нормального веса. но не больше  " + we_2);
