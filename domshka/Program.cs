@@ -438,7 +438,7 @@ namespace domshka
                 we_2 = -we_2;
                 Console.WriteLine("Вам стоит сбросить минимум " + we_1 + " кг для нормального веса. но не больше  " + we_2);
             }
-            else { Console.WriteLine("неведомая хуйня"); }
+            else { Console.WriteLine("неведомая зверушка"); }
 
 
         }
