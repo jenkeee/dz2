@@ -30,7 +30,7 @@ namespace domshka
                 {
                     Console.Clear();
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Введите номер задачи 1-6, прочие символы не нравятся приложению ");
+                Console.WriteLine("Введите номер задачи 1-5, прочие символы не нравятся приложению, ??? ");
                     x = Convert.ToInt32(Console.ReadLine());     // если программе сообщить пробел, или символ то она даст ошибку, 
                                                                  //if (x) { string; break; } // вобще не туда думаю но вопрос пока оставим
                     Console.Title = ("Меню");
@@ -104,7 +104,7 @@ namespace domshka
                     minimal = c;
 
                 }
-                else { Console.WriteLine("2 самых меньших числа или все меньшие. Прошу вводи разные числа"); minimal = 50; }
+                else { Console.WriteLine("2 самых меньших числа или все меньшие. Прошу вводи разные числа, ну или 3 меньших числа, ну бывай"); minimal = c; }
 
                 return minimal;
             }
@@ -226,6 +226,7 @@ namespace domshka
         /// </summary>
         static void dz4() // с тобой не закончили
             {
+            Console.Title = ("4.	Реализовать метод проверки логина и пароля.");
             Console.Write("Введите логин: ");
             string u_name = Console.ReadLine(); // запоминаем логин в юнейм
             Console.Write("Введите пароль: ");
@@ -320,27 +321,58 @@ namespace domshka
 
         }
 
-            #endregion
-            #region задание 5
-            /// <summary>
-            //        5.
-            //а) Написать программу, которая выводит на экран ваше имя, фамилию и город проживания.
-            //б) Сделать задание, только вывод организовать в центре экрана.
-            //в) *Сделать задание б с использованием собственных методов(например, Print(string ms, int x, int y).
+        #endregion
+        #region задание 5
+        /// <summary>
+        //        5.
+        //        а) Написать программу, которая запрашивает массу и рост человека, вычисляет его индекс массы и сообщает, нужно ли человеку похудеть, набрать вес или всё в норме.
+        //        б) *Рассчитать, на сколько кг похудеть или сколько кг набрать для нормализации веса.
             /// </summary>
 
             static void dz5(string first_name, string last_name)
             {
-                Console.Title = ("5.	Об авторе");
-                Console.SetCursorPosition(15, 10);
-                Console.WriteLine("hello" + " " + first_name + " " + last_name);
-                Console.WriteLine("Чтобы выполнить задание в) я попрошу тебя ввести координаты x и y");
-                int x = Convert.ToInt32(Console.ReadLine());
-                int y = Convert.ToInt32(Console.ReadLine());
-                string ms = "я пока не понял как как сообщить новое значение переменной, позвольте мне остаться викотором корасем из спб?";
-                about(ms, x, y); // выводин инфу об авторе и собственно задание в)            
 
+            Console.Title = ("5. Рассчитать и вывести индекс массы тела(ИМТ).");
+            double weight, high;
+            Console.WriteLine("Привет, я программа которая считает ИМТ, давай посчитаем индекс массы тела и посмотрим что же он значит. ");
+            Console.Write("Введите ваш вес в кг: ");
+            weight = Convert.ToDouble(Console.ReadLine());
+            /*
+             * weight += Math.Round(weight, 1, MidpointRounding.AwayFromZero);
+            Console.WriteLine($"я округлил переменную weight = {weight} до toEven, эксперементирую дальше");
+            */
+            //if (weight != double)
+            { }
+            Console.Write("Введите ваш рост в см: ");
+            high = Convert.ToInt32(Console.ReadLine());
+            double I = weight / (Math.Pow(high / 100, 2));// weight / (high/100 * high/100);  // (Math.Pow(x / y, 2)) - возводит в степень 2 // Math.Sqrt извлекает квадрат
+            Console.WriteLine("I = {0:f4}", I);
+            /*
+             ИМТ < 18.5: 	Ниже нормального веса
+        ИМТ >= 18.5 И < 25: 	Нормальный вес
+        ИМТ >= 25 И < 30: 	Избыточный вес
+ИМТ >= 30 И < 35: 	Ожирение I степени
+ИМТ >= 35 И < 40: 	Ожирение II степени
+ИМТ >= 40: 	Ожирение III степени
+            */
+            double i_id;
+            double we_1 ;
+            if (I < 18.5) { 
+                Console.WriteLine("Ниже нормального веса");
+                 i_id = 18.5 - I;
+                we_1= i_id * (Math.Pow(high / 100, 2));
+                Console.WriteLine("Вам стоит набрать минимум " + we_1 + " кг для нормального веста. ");
+              
             }
+            else if (I >= 18.5 && I < 25 ) { Console.WriteLine("Нормальный вес"); }
+            else if (I >= 25 && I < 30) { Console.WriteLine("Избыточный вес"); }
+            else if (I >= 30 && I < 35) { Console.WriteLine("Ожирение I степени"); }
+            else if (I >= 35 && I < 40) { Console.WriteLine("Ожирение II степени"); }
+            else if (I >= 40 ) { Console.WriteLine("Ожирение II степени"); }
+            else { Console.WriteLine("неведомая хуйня"); }
+
+
+        }
 
             /// <summary>
             /// вот и задание под В, ну или я не правильно понял, создаю метод about
@@ -395,7 +427,7 @@ namespace domshka
                 double value = 11.1;
                 /* double znachenie = Convert.ToDouble(Console.ReadLine()); */
 
-                for (int ctr = 0; ctr <= 5; ctr++)
+            for (int ctr = 0; ctr <= 5; ctr++)
                     value = RoundValueAndAdd(value);
 
                 Console.WriteLine();
