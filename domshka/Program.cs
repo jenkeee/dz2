@@ -614,7 +614,7 @@ namespace domshka
         // 6 заданий позади 
         static void dz7()
         {
-            Console.WriteLine();
+            Console.WriteLine("tocheck");
         
         }
             #endregion
