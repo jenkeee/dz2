@@ -8,6 +8,7 @@ namespace domshka
 {
     class Program
     {      
+         
 
             /*
              * если просит ввести цифру надо ввести цифру , иначе будет краш. буду думать в сторону while
@@ -30,7 +31,7 @@ namespace domshka
                 {
                     Console.Clear();
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Введите номер задачи 1-5, прочие символы не нравятся приложению, ??? ");
+                Console.WriteLine("Введите номер задачи 1-7, прочие символы не нравятся приложению, ??? ");
                     x = Convert.ToInt32(Console.ReadLine());     // если программе сообщить пробел, или символ то она даст ошибку, 
                                                                  //if (x) { string; break; } // вобще не туда думаю но вопрос пока оставим
                     Console.Title = ("Меню");
@@ -452,34 +453,100 @@ namespace domshka
                 Console.WriteLine(ms);
                 //return first_name;
             }
-            #endregion
-            #region 6 задание
-            /// <summary>
-            /// 6)  *Создать класс с методами, которые могут пригодиться в вашей учебе (Print, Pause).
-            /// </summary>
-            static void dz6()
+        #endregion
+        #region 6 задание
+        /// <summary>
+        ///  6. *Написать программу подсчета количества «хороших» чисел в диапазоне от 1 до 1 000 000 000. 
+        /// «Хорошим» называется число, которое делится на сумму своих цифр. Реализовать подсчёт времени выполнения программы, используя структуру DateTime.
+        /// </summary>
+        static void dz6()
             {
-                DateTime start = DateTime.Now;
-                int k = 0;
-                for (int i = 2; i < 1000000; i++)
-                    if (IsSimple(i))
-                    {
-                        k++;
-                        Console.WriteLine("{0} {1}", k, i);
-                    }
-                Console.WriteLine(k);
-                Console.WriteLine(DateTime.Now - start);
+            Console.Clear();
+            /*
+            Console.WriteLine("Сейчас мы займемся счетом хороших чисел в указанном диапазоне, изначально по условиям диапазон я задавал сам, но я дамю возможность изменить диапазон проверяющему");
+            Console.WriteLine("Введите число, от которого мы будем считать хорошие числа");
+            int x_start = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Введите число, до которого мы будем считать хорошие числа");
+            int x_end = Convert.ToInt32(Console.ReadLine());
+            */
+            Console.WriteLine("Подождите, идёт подсчёт количества 'хороших' чисел в заданном диапазоне");
+            Console.WriteLine("Время начала операции " + DateTime.Now);
+            
+            int start_timer = DateTime.Now.Second;  // записываем время начала счета в переменную
 
-            }
-            static bool IsSimple(int n)
+            Console.SetCursorPosition(0, 10); Console.Write("Обрабатывается число: ");
+            Console.SetCursorPosition(0, 11); Console.Write("Найдено: ");
+
+            var GoodNum = 0; // объявляем хорошие числа
+            int range = 1_000_000_000; // до какого числа считаем
+            bool flag_stop = !true;
+
+            //////////////////////////////////////////////////////////////////////////////////////////////
+            for (var gn_first = 1; gn_first <= range; gn_first++) // делаем бесконечный цикл 
+                                                                  // (var gn_first = 1; задаем значение точка старта счета
+                                                                  //gn_first <= range;  будет считать пока не меньше либо равно 
+                                                                  // gn_first++) : каждый раз выполняя цикл , мы меняем значение gn_first на + 1
             {
-                for (int i = 2; i <= n / 2; i++)
-                    if (n % i == 0) return false;
-                return true;
-            }
-            #endregion
-            #region bonus
-            static void bonus()
+                Console.SetCursorPosition(23, 10); Console.Write(gn_first); // пишем какое число сейчас у нас в gn_first
+
+                // делаем если и вызываем метод который в случае выполнения даст нам GoodNum + 1 и выведет на экран полученное в заданном месте
+                // Console.SetCursorPosition(10, 5); Console.Write(GoodNum); 
+
+                if (GoodNumCheck(gn_first)) { GoodNum++; Console.SetCursorPosition(10, 11); Console.Write(GoodNum);
+                    //Console.ReadKey();
+                }
+                
+               //else if (flag_stop == !true) break;
+            } 
+            //////////////////////////////////////////////////////////
+            ///
+            Console.SetCursorPosition(23, 10); Console.Write(range);
+            Console.SetCursorPosition(10, 11); Console.Write(GoodNum);
+            Console.WriteLine();
+            Console.WriteLine();
+            start_timer =  start_timer - DateTime.Now.Second; // посчитаем сколько времени мы потратили на выполнение цикла где делали 
+            //gn_first + 1 пока не <= range 
+
+            Console.WriteLine("Время окончания операции " + DateTime.Now); 
+            Console.WriteLine("Потрачено секунд на выполнение: " + start_timer);
+
+                       NextPart();
+            
+        }
+        private static bool GoodNumCheck(int x_metha) // метод который определит число хорошее или нет
+                                                // у нас есть условие if (GoodNumCheck(gn_first)) 
+                                                // этим условием мы берем значение gn_first и ставим его в x_metha
+        {
+
+            // «Хорошим» называется число, которое делится на сумму своих цифр.
+            var good = false; 
+            var holder = x_metha; // на каждый вызов метода  x_metha будет меняться // но и мы перезапишем холдер
+            var sum_6 = 0; // сумма чисел
+            var a = 0;
+            do
+            {
+                a = x_metha % 10; // % это логическая операция остаток от деления в данном случае остаток от деления на 10
+                // мы начинаем считать хорошие числа от 0 поэтому даем 0 -  var sum_6 = 0;
+                // считаем первую сумму потом будем делить на неё
+
+
+                sum_6 = sum_6 + a; // получаем значение второго символа
+
+                x_metha = x_metha / 10; // получаем десятки
+            } while (x_metha >= 1); // будем гонять цикл пока первый сивол не бут =1
+            if (holder % sum_6 == 0) { good = true; } // если число которое мы запомнили до того как начали гонять цикл делится без остатка на крайний знак перед нулем // остаток от числа x_metha / значит число хорошее
+            return good;
+        }
+        private static void NextPart()
+        {
+            Console.ReadKey();
+            Console.WriteLine("Нажмите любую клавишу, чтобы продолжить:");
+            Console.Clear();
+            
+        }
+        #endregion
+        #region bonus
+        static void bonus()
             {
                 Console.Title = ("иди отсюда пока не поздно");
                 Console.WriteLine("Вот и зачем ты нажал 7? это недостроенный бонусный уровень, как тебя зовут?");
@@ -537,14 +604,19 @@ namespace domshka
                                   Math.Round(znachenie, MidpointRounding.AwayFromZero));
                 return znachenie + .1;
             }
-            /*class arttem //создал класс внутри класса щас методы буду изучать принт и пауза
-            {
+        /*class arttem //создал класс внутри класса щас методы буду изучать принт и пауза
+        {
 
-            }*/
-            #endregion
+        }*/
+        #endregion
 
-            #region задание 7
-
+        #region задание 7
+        // 6 заданий позади 
+        static void dz7()
+        {
+            Console.WriteLine();
+        
+        }
             #endregion
         }
 
