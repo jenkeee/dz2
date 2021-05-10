@@ -4,663 +4,754 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace domshka
+namespace domashka3
 {
-    class Program
-    {      
-         
+    #region задание 1
 
-            /*
-             * если просит ввести цифру надо ввести цифру , иначе будет краш. буду думать в сторону while
-             * 
-             * главное 3тье задание запони навсегда
-             */
-            #region menu 
-            /// <summary>
-            /// точка входа в программу Main
-            /// </summary>
-            /// <param name="args"> параметры входа</param>
-            static void Main(string[] inthis)  // inthis в данном случае имя метода может быть любым 
+    /// <summary>
+    /// а) Дописать структуру Complex, добавив метод вычитания комплексных чисел. Продемонстрировать работу структуры.
+    /// б) Дописать класс Complex, добавив методы вычитания и произведения чисел.Проверить работу класса.
+    /// в) Добавить диалог с использованием switch демонстрирующий работу класса.
+    /// </summary>
+    struct strukura // создаем структуру комплекс
+    {
+        public double im; // создаем переменную im
+        public double re; // создаем переменную re
+        public strukura(double IM, double RE) // делал это для попробовать короткую запись на ретерн ту стринг
+        {
+            this.im = IM;
+            this.re = RE;
+        }
+
+        //  в C# в структурах могут храниться также действия над данными
+
+        //  static void Plus(Complex x) так объявить метод не могу
+        public strukura Plus(strukura x) // делает(создает) метод, в данном случае со значениями к complex2 и в нем делает метод который складывает значение частей комплексных чисел 
+        {
+            strukura y; // создаем структуру , когда вернем y который тут считаем, мы получим значение сложения комплексных чисел comp3.Plus(complex2);  
+            y.im = im + x.im; // то что y это новое число , x это Plus(complex2); так как Plus(strukura x) 
+            y.re = re + x.re; // im + re это наследованно от comp3.Plus
+            return y; // получаем {1+1i} + {2+2i} = {3+3i}
+        }
+        //  Пример произведения двух комплексных чисел
+        public strukura Multi(strukura x) // в этом методе мы будем считать общую часть числа другим способом. не просто сложение, но и вот y.im = re * x.im + im * x.re;
+        {
+            strukura y;
+            y.im = re * x.im + im * x.re;
+            y.re = re * x.re - im * x.im;
+            return y;
+        }
+        public strukura minus(strukura x) // надо прям рбязательно все части инициализировать этот метод не используется в программе
+        {
+            strukura y;
+            y.im = im - x.im; // то что y это новое число , x это Plus(complex2); так как Plus(strukura x) 
+            y.re = re - x.re; // обязательно должны быть значения
+            return y;
+        }
+        public string ToString()
+        {
+            //return re + "-" + im + "i"; // notuse=1shalomnotuse
+            // Console.WriteLine("public string ToString получает return re - " + "im + i ");
+            return $"{re} + {im}i"; // заменил длинную запись выше на покороче
+
+        }
+    }
+
+
+    #endregion
+    #region задание 1 б)
+    // выбрал этот вариант
+    //б) Дописать класс Complex, добавив методы вычитания и произведения чисел.Проверить работу класса. // (a1a2−b1b2)+(a1b2+b1a2)i
+    class Complex_cl
+    {
+        // Все методы и поля публичные. Мы можем получить доступ к ним из другого класса.
+        public double im;
+        public double re;
+
+        public Complex_cl Plus(Complex_cl x2)
+        {
+            Complex_cl x3 = new Complex_cl();
+            x3.im = x2.im + this.im;
+            x3.re = x2.re + this.re;
+            return x3;
+        }
+        public Complex_cl minus(Complex_cl x2)
+        {
+            Complex_cl x3 = new Complex_cl();
+            x3.im = x2.im - this.im;
+            x3.re = x2.re - this.re;
+            return x3;
+        }
+        public Complex_cl umojil(Complex_cl x2)
+        {
+            Complex_cl x3 = new Complex_cl();
+            x3.im = this.re * x2.im + this.im * x2.re;
+            x3.re = this.re * x2.im - this.im * x2.re;
+            //y.im = re * x.im + im * x.re;
+            //y.re = re * x.re - im * x.im;
+            return x3;
+        }
+
+        public string ToString()
+        {
+            return re + "+" + im + "i";
+        }
+    }
+    #endregion
+    #region задание 3 создаю класс
+    /// <summary>
+    /// 3.	*Описать класс дробей — рациональных чисел, являющихся отношением двух целых чисел. Предусмотреть методы сложения, вычитания, умножения и деления дробей.
+    /// Написать программу, демонстрирующую все разработанные элементы класса.
+    /// * Добавить свойства типа int для доступа к числителю и знаменателю;
+    /// * Добавить свойство типа double только на чтение, чтобы получить десятичную дробь числа;
+    /// ** Добавить проверку, чтобы знаменатель не равнялся 0. Выбрасывать исключение ArgumentException("Знаменатель не может быть равен 0");
+    /// *** Добавить упрощение дробей.
+    /// </summary>
+    class Drob
+    {
+        // Все методы и поля публичные. Мы можем получить доступ к ним из другого класса.
+        public int up_str;
+        public int down_str;
+        public double desyatki;
+
+        public Drob Plus(Drob drob2)
+        {
+            Drob drob3 = new Drob();
+            drob3.up_str = this.up_str * drob2.down_str + drob2.up_str * this.down_str;
+            drob3.down_str = drob2.down_str * this.down_str;
+            drob3.desyatki = drob3.up_str / drob3.down_str;
+            if (drob3.up_str == 0) { drob3.up_str = 0; drob3.down_str = 0; }
+
+
+            return drob3;
+        }
+
+
+        public Drob minus(Drob drob2)
+        {
+            //Drob drob3 = new Drob();
+            ///* int up1 = this.up_str * drob2.down_str;
+            // int up2 = drob2.up_str * this.down_str;
+            // double up3 = up1 - up2;
+            // drob2.up_str = Convert.ToInt32(up3);*/
+            //if  (this.up_str == 0) { drob3.up_str = 0; drob3.down_str = 0; return this; } 
+            //else if (drob2.up_str == 0) { drob3.up_str = 0; drob3.down_str = 0; return drob2; } 
+
+            //else {
+            //    drob3.up_str = ((this.up_str * drob2.down_str) - (drob2.up_str * this.down_str));
+            //    drob3.down_str = drob2.down_str * this.down_str;
+            //    if (drob3.up_str == 0) { drob3.up_str = drob3.up_str + 1; return drob3; } 
+            //    // решил проблему вычитания, если результат в числители получит 0, он поставит туда 1
+            //    return drob3;
+            //}
+
+            Drob drob3 = new Drob();
+            /* int up1 = this.up_str * drob2.down_str;
+             int up2 = drob2.up_str * this.down_str;
+             double up3 = up1 - up2;
+             drob2.up_str = Convert.ToInt32(up3);*/
+
+            // проверим числители 
+            if (this.up_str == 0) { this.down_str = 0; drob3.up_str = this.up_str + drob2.down_str;
+                drob3.down_str = drob2.down_str;
+            }
+
+            
+            else if (drob2.up_str == 0) { drob2.down_str = 0; 
+                
+            drob3.up_str = this.up_str + drob2.down_str;
+                drob3.down_str = this.down_str;
+            }
+
+
+            // все другие случаи
+            else 
+                drob3.up_str = ((this.up_str * drob2.down_str) - (drob2.up_str * this.down_str));
+            drob3.down_str = drob2.down_str * this.down_str;
+
+
+            // проверим знаменатели
+
+            if (drob3.down_str != 0) drob3.down_str = drob2.down_str * this.down_str;
+          // непомню зачем но вроде если в результате операций мы получим числитель 0 то вернем ему 1.
+            else if (drob3.up_str == 0) { drob3.up_str = drob3.up_str + 1; }
+            return drob3;
+        }
+        public Drob del(Drob drob2)
+
+        {
+            Drob drob3 = new Drob();
+            drob3.up_str = this.up_str * drob2.down_str;
+            drob3.down_str = this.down_str * drob2.up_str;
+            return drob3;
+        }
+
+        public Drob umnog(Drob drob2)
+
+        {
+            Drob drob3 = new Drob();
+            drob3.up_str = this.up_str * drob2.up_str;
+            drob3.down_str = this.down_str * drob2.down_str;
+            return drob3;
+        }
+
+
+        /*public Drob minus(Drob x2)
+        {
+            Complex_cl x3 = new Complex_cl();
+            x3.im = x2.im - this.im;
+            x3.re = x2.re - this.re;
+            return x3;
+        }
+        public Drob umojil(Drob x2)
+        {
+            Complex_cl x3 = new Complex_cl();
+            x3.im = this.re * x2.im + this.im * x2.re;
+            x3.re = this.re * x2.im - this.im * x2.re;
+            //y.im = re * x.im + im * x.re;
+            //y.re = re * x.re - im * x.im;
+            return x3;
+        }
+
+        public string ToString()
+        {
+            return re + "+" + im + "i";
+        }
+    }*/
+        /* class Drob
+         {
+             int Drob_up;
+             int Drob_down;
+
+
+
+             public Drob Plus(Drob x2)
+             {
+                 Drob result = new Drob();
+                 result.Drob_up = x2.Drob_up + this.Drob_up;
+                 result.Drob_down = x2.Drob_down + this.Drob_down;
+                 return result;
+             }
+
+         }*/
+        #endregion
+        #region Main menu
+        class Program
+        {
+
+            static int GetValue(string message) // метод который проверит ты ввел инт32 или нет в переменную num_after
             {
-                // int x; // просто объявил переменную и не стал присаивать ей 0 как было раньше
-                var b = true;
-                string first_name = "dart";
-                string last_name = "vaider";
-                int x = 0;
+                string num_before;
+                bool flag_parse;
+                int num_after; // нам потребуется спросить номер кейса задачи и у нас есть функционал проверки на то чтобы значение было int 32 и соответсвовало кейсам далее
+                do
+                {
+                    // Console.WriteLine("int.TryParse(num_before, out num_after);");
+                    // Console.Clear();
+                    Console.WriteLine("Введите номер задачи от 1 до 3. принимаются только целые числа."); // спецально так записал, варианты вывода проверял
+                    num_before = Console.ReadLine(); // запишем num_before
+                                                     //  Если перевод произошел неправильно, то результатом будет false
+                    flag_parse = int.TryParse(num_before, out num_after); // если метод .tryparse сможет сделать int из строки s то он сделает out в num_after тоесть передаст значение num_before в num_after и
+                                                                          // сообшит переменной flag true,
+                                                                          //  если не получится int32 то сообшит во flag false 
+                }
+                while (!flag_parse);  //  Пока переворачивает булевое значение flag_parse
+                return num_after; // если вечный цикл закончится, метод вернет num_after
+            }
+            static void Main(string[] args)
+            {
+                string first_name = "DART";
+                string last_name = "VAIDER";
+                bool flag_switch = true; //ненужный флаг в моем случае             
+                int value; // описываем переменную велью как инт
                 do
                 {
                     Console.Clear();
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Введите номер задачи 1-7, прочие символы не нравятся приложению, ??? ");
-                    x = Convert.ToInt32(Console.ReadLine());     // если программе сообщить пробел, или символ то она даст ошибку, 
-                                                                 //if (x) { string; break; } // вобще не туда думаю но вопрос пока оставим
                     Console.Title = ("Меню");
-                    switch (x)
+                    Console.Clear();
+                    Console.WriteLine("Введите номер задачи 1-3.");
+                    value = GetValue(""); // даем значение велью методом GetValue // и там метод уже либо пропустит int32 либо будет бесконечно вызыватся, пока ты не напишиш цифры удовлетворяющие условия
+                                          // гет валью дает нам проверку на вводимы знаки, а диапазон мы сдесь даже не ставили У НАС ВСЕГО 3 КЕЙСА
+
+
+                    switch (value)
                     {
                         case 1:
-                            pr1();
+                            dz1(value);
+
                             break;
                         case 2:
-                            pr2();
+                            dz2();
                             break;
                         case 3:
-                            pr3();
+                            dz3(first_name, last_name);
                             break;
-                        case 4:
-                            dz4();
-                            break;
-                        case 5:
-                            dz5(first_name, last_name);
-                            break;
-                        case 6:
-                            dz6();
-                            break;
-                    case 7:
-                        dz7();
-                        break;
-                    case 8:
-                            bonus();
-                            break;
-                    
-                    default:      // понравилась эта констуркция, не совсем понятно но понятно как использовать и редактировать , все дз буду оформлять по этому типу
-                                      // думаю как сделать проверку на X при чем тут не равно b  // как я понял        // b = !b; вобще не понятно зачем тут это   // переворачиваем true в false           
-                            Console.Write("пока пока");
-                            b = !b; // !b - в данном случае возращает false вместо true, перезаписываем переменную b // while работает
-                                    // b = true; // вернул b - значение true в таком случае while не будет не будет использованно
+                            /* default:      // тут она не нужна дефаулт, но оставил для примера // выше проверка убивает смысл дкефаулта
+                                 flag_switch = !flag_switch; // думаю как сделать проверку на X при чем тут не равно b  // как я понял                     
+                                 Console.Write("у меня есть только 3 задачи, не хочу играть, не по правилас, вводи 1-3");
+                                 break;*/
 
-                            /* тут смысл сбить значение b если выполнен default чтобы удовлетворить while , в нашем случае не удовлетворить*/
 
-                            break;
                     }
-                    Console.ReadKey();
-                } while (b); // Вобще этот while если мы все. закончили программу. надо сообщить ему лож и он будет выполнен false = true ^ true
-                Console.WriteLine(true ^ true);
-                Console.Clear();
-                Console.SetCursorPosition(10, 15);
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("THE FORCE BE WITH U... SEE YA LATER");
-                Console.WriteLine("Пытаюсь понять while исключения ");
-                Console.ReadKey();
-            }
-        #endregion
-        #region задание 1
-        /// <summary>
-        /// 1. Написать метод, возвращающий минимальное из трёх чисел.
-        /// </summary>
-        static void pr1()
-            {
-            // не совсем понимаю зачем, но по условию задачи я должен сделать вывод методом еще наделаю переменных a g c
-            int min(int a, int g, int c)
-            {
-                int minimal;
-
-                if (a < g && a < c)
-                {
-                    minimal = a;
-                }
-                else if (g < a && g < c)
-                {
-                    minimal = g;
-
-                }
-                else if (c < a && c < g)
-                {
-                    minimal = c;
-
-                }
-                else { Console.WriteLine("2 самых меньших числа или все меньшие. Прошу вводи разные числа, ну или 3 меньших числа, ну бывай"); minimal = c; }
-
-                return minimal;
-            }
-            // собственно я закончил метод 
-            var b = true;
-            Console.Title = ("1. Написать метод, возвращающий минимальное из трёх чисел.");
-            Console.Clear();
-            Console.WriteLine("Привет, сейчас я попрошу ввести тебя ввести 3 числа и я выберу самое меньшее.");
-            Console.Write("Введи первое число.");
-            int x = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Введи второе число.");
-            int y = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Введи 3-е число.");
-            int z = Convert.ToInt32(Console.ReadLine());
-            Console.Clear();
-            Console.WriteLine($"Минимальное число: { min(x, y, z)} вот и представь, создал метод , оно стоило того в данном случае?");
-            
-            if (x < y && x < z)
-            {
-                Console.WriteLine("Самое меньшее число " + x);
-            }
-            else if (y < x && y < z)
-            {
-                Console.WriteLine("Самое меньшее число " + y);
-
-            }
-            else if (z < y && z < x)
-            {
-                Console.WriteLine("Самое меньшее число " + z);
-
-            }
-            else { Console.WriteLine("2 самых меньших числа или все меньшие. Прошу вводи разные числа" ); }
-            while (x == 0 && y == 0 && z == 0)
-            {
-
-                Console.Clear();
-                Console.SetCursorPosition(10, 15);
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("THE FORCE BE WITH U... SEE YA LATER");
-                Console.WriteLine("Ты указал 3 нуля. и завис тут потому что я написал while вместо else if , while надо писать если ты планируешь выполнять повторяемое вычесление до тех пор пока условие не нарушится");
-
-
-                
-                Console.ReadKey();
-
-
+                } while (true);  // только если выполним кейс пройдем дальше, получим true, но тут и так лежит тру
             }
 
-        }
-
-        #endregion
-        #region задание 2
-        /// <summary>
-        /// 2. Написать метод подсчета количества цифр числа.
-        /// </summary>
-        /// 
-
-        static void pr2()
-            {
-            Console.Title = ("2. Написать метод подсчета количества цифр числа.");
-            Console.Write("Число: ");
-            Console.WriteLine("Количество знаков: " + count(Console.ReadLine()));
-            Console.ReadKey();
-        }
-        static int count(string s) // создал статический метод int типа который вернет s.length // понять бы откуда берется s - s получает значение readkey почему?
-        {
-            return s.Length; // возвращает длину s 
-        }
-
-        #endregion
-        #region задание 3
-        /// <summary>
-        /// 3.	С клавиатуры вводятся числа, пока не будет введен 0. Подсчитать сумму всех нечетных положительных чисел.
-
-        /// </summary>
-        static void pr3()
-            {
-            Console.Title = ("3.	С клавиатуры вводятся числа, пока не будет введен 0. ");
-            double score = 0;
-            double input = 0;
-            double into = 0;
-            bool flag = false;
-
-
-            while (true) // Вечный цикл
-            {
-                while (!flag)
-                {
-                    Console.Clear(); // Чистим консоль.
-                    Console.WriteLine($"Сумма всех чисел = {score}"); // Вывод суммы чисел.
-                    Console.Write("Повторите ввод числа: "); // Вывод сообщения.
-
-                    flag = double.TryParse(Console.ReadLine(), out input); // Защита от дурака // try parse то что я искал // out input записывает в input
-                    if (input > 0 && input % 2 == 1) // делаем условие проверка на нечет и положительное
-                        into = input; // если условие выполнено, записываем введенное число, дальше мы его сложим
-                    else
-                        into = 0; // условие не выполнено, даем введенному значению 0
-                }
-
-                flag = false; // Избавляемся от бага. // запомни это 
-                score = score + into; // Прибавляем к сумме чисел новое число прошедшее условие проверки на + и нечет
-
-                if (input == 0) break; // Выход из вечного цикла:
-            }
-
-            Console.Clear(); // Чистим консоль.
-            Console.WriteLine($"Итоговая сумма всех чисел: {score}"); // Вывод итоговой суммы чисел.
-            Console.ReadKey(); // Ждём нажатие клавиши.
-        }
-
-        #endregion
-        #region задание 4
-        /// <summary>
-        /// 4.	Реализовать метод проверки логина и пароля. На вход метода подается логин и пароль. На выходе истина, если прошел авторизацию, и ложь, если не прошел 
-        /// (Логин: root, Password: GeekBrains). 
-        /// Используя метод проверки логина и пароля, написать программу: пользователь вводит логин и пароль, 
-        /// программа пропускает его дальше или не пропускает. С помощью цикла do while ограничить ввод пароля тремя попытками.
-
-        /// </summary>
-        static void dz4() // с тобой не закончили
-            {
-            Console.Title = ("4.	Реализовать метод проверки логина и пароля.");
-            Console.Write("Введите логин: ");
-            string u_name = Console.ReadLine(); // запоминаем логин в юнейм
-            Console.Write("Введите пароль: ");
-            string u_pass = Console.ReadLine(); // запоминаем пароль в юпасс
-            int counter = 2; // количество попыток
-
-
-
-            do
-            {
-                Console.Clear(); // Чистка консоли
-
-                if (val_user(u_name) == false)  // Проверка логина и пароля причем проверяет логин, а пароль уже проверяется в методе логина вызовом заранее созданого метода, мне интиресно
-                                                // насколько важно описывать методы вызываемые в главном до главного метода, я их описываю после.
-                {
-                    if (counter <= 0) // счетчик попыток
-                    {
-                        Console.SetCursorPosition(13, 10);
-                        Console.ForegroundColor = ConsoleColor.Blue;
-                        Console.WriteLine("ТЫ ИСЧЕРПАЛ ПОПЫТКИ!");
-                        Console.SetCursorPosition(10, 15);
-                        Console.ForegroundColor = ConsoleColor.Blue;
-                        Console.WriteLine("THE FORCE BE WITH U... SEE YA LATER");
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("логин root был");
-                        break; // выход из цикла // ++++
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Я в тебя верю, у тебя осталось попыток : {counter}"); // покажет сколько попыток осталось 
-                        counter = counter - 1; // операция инкремента
-                        Console.SetCursorPosition(10, 15);
-                        Console.ForegroundColor = ConsoleColor.Blue;
-                        Console.WriteLine("THE FORCE BE WITH U... SEE YA LATER");
-                        Console.SetCursorPosition(10, 16);
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("ERROR!"); // Вывод ошибки
-                        Console.SetCursorPosition(10, 3);
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write("Введите логин: ");
-                        u_name = Console.ReadLine(); // Вводим логин
-
-                        Console.Write("Введите пароль: ");
-                        u_pass = Console.ReadLine(); // Вводим пароль
-                        
-                    }
-                }
-
-                else
-                {
-                    Console.Clear();
-                    Console.SetCursorPosition(10, 15);
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine("THE FORCE BE WITH U... SEE YA LATER");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.SetCursorPosition(10, 16);
-                    Console.WriteLine("YOU ARE WELCOME PREPERE TO FIGHT!!!!!");
-                    break; // выход из цикла
-                }
-
-            } while (true); // вечный цикл
-
-
-            bool val_user(string user)
-            {
-                if (user == "root")
-                {
-                    if (val_pass(u_pass) == true) // Проверяем пароль методом val_pass();
-                    {
-                        Console.WriteLine("Пароль правильный!");
-                        return true;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Пароль не правильный!");
-                        return false;
-                    }
-                }
-                else return false; // user не совпал
-                Console.WriteLine("Пользователь найден!");
-                
-
-            }
-            bool val_pass(string password) 
-            {
-                if (password == "GeekBrains")
-                {
-                    return true; // пароль совпал
-                }
-                else return false; // пароль не совпал
-            }
-
-        }
-
-        #endregion
-        #region задание 5
-        /// <summary>
-        //        5.
-        //        а) Написать программу, которая запрашивает массу и рост человека, вычисляет его индекс массы и сообщает, нужно ли человеку похудеть, набрать вес или всё в норме.
-        //        б) *Рассчитать, на сколько кг похудеть или сколько кг набрать для нормализации веса.
+            #endregion
+            #region задание 1
+            /// <summary>
+            /// а) Дописать структуру Complex, добавив метод вычитания комплексных чисел. Продемонстрировать работу структуры.
+            /// б) Дописать класс Complex, добавив методы вычитания и произведения чисел.Проверить работу класса.
+            /// в) Добавить диалог с использованием switch демонстрирующий работу класса.
             /// </summary>
+            /// 
 
-            static void dz5(string first_name, string last_name)
+            static void dz1(int value) // надо описать переменную, не хочу новую переменную придумывать для кейсов все равно она не используется, кроме как навигация меню
             {
+                Console.Clear();
+                Console.Title = ("меню первой задачи");
+                Console.SetCursorPosition(13, 12);
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine($"Введи 1 для того чтобы посмотреть вычитание комплексных чисел");
+                Console.SetCursorPosition(13, 13);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Введи 2 для того чтобы посмотреть вычитание и умножение комплексных чисел, представленных в виде класса");
+                Console.ForegroundColor = ConsoleColor.White;
+                bool flag_switch = true;
+                do
+                {
 
-            Console.Title = ("5. Рассчитать и вывести индекс массы тела(ИМТ).");
-            double weight, high;
-            Console.WriteLine("Привет, я программа которая считает ИМТ, давай посчитаем индекс массы тела и посмотрим что же он значит. ");
-            Console.Write("Введите ваш вес в кг: ");
-            weight = Convert.ToDouble(Console.ReadLine());
-            /*
-             * weight += Math.Round(weight, 1, MidpointRounding.AwayFromZero);
-            Console.WriteLine($"я округлил переменную weight = {weight} до toEven, эксперементирую дальше");
-            */
-            //if (weight != double)
-            { }
-            Console.Write("Введите ваш рост в см: ");
-            high = Convert.ToInt32(Console.ReadLine());
-            double I = weight / (Math.Pow(high / 100, 2));// weight / (high/100 * high/100);  // (Math.Pow(x / y, 2)) - возводит в степень 2 // Math.Sqrt извлекает квадрат
-            Console.WriteLine("I = {0:f4}", I);
-            /*
-             ИМТ < 18.5: 	Ниже нормального веса
-        ИМТ >= 18.5 И < 25: 	Нормальный вес
-        ИМТ >= 25 И < 30: 	Избыточный вес
-ИМТ >= 30 И < 35: 	Ожирение I степени
-ИМТ >= 35 И < 40: 	Ожирение II степени
-ИМТ >= 40: 	Ожирение III степени
-            */
-            double i_id;
-            double i_id_up;
-            double we_1;
-            double we_2;
-            i_id = 18.5 - I; // i_id разница между желаемым минимум и фактическим значением
-            i_id_up = 25 - I; //i_id_up разница между желаемым максимумом и фактическим значением
-            we_1 = i_id * (Math.Pow(high / 100, 2)); // we_1 это вес который необходимо добавить до порого идеального минимума
-            we_2 = i_id_up * (Math.Pow(high / 100, 2)); // we_2 это вес который необходимо добавить до порого идеального максимума
+                    
 
-            if (I < 18.5)
-            {
-                Console.WriteLine("Ниже нормального веса");
-                i_id = 18.5 - I; // i_id разница между желаемым минимум и фактическим значением
-                i_id_up = 25 - I; //i_id_up разница между желаемым максимумом и фактическим значением
-                we_1 = i_id * (Math.Pow(high / 100, 2)); // we_1 это вес который необходимо добавить до порого идеального минимума
-                we_2 = i_id_up * (Math.Pow(high / 100, 2)); // we_2 это вес который необходимо добавить до порого идеального максимума
-                Console.WriteLine("Вам стоит набрать минимум " + we_1 + " кг для нормального веса. но не больше  " + we_2);
+                    value = GetValue(""); // даем значение велью методом GetValue // и там метод уже либо пропустит int32 либо будет бесконечно вызыватся, пока ты не напишиш цифры удовлетворяющие условия
+                                          // гет валью дает нам проверку на вводимы знаки, а диапазон мы сдесь даже не ставили У НАС ВСЕГО 3 КЕЙСА
+
+
+                    switch (value)
+                    {
+                        case 1:
+                            dz1_a();
+
+                            break;
+                        case 2:
+                            dz1_b();
+                            break;
+                        default:      // т
+                            flag_switch = !flag_switch; //                   
+                            Console.WriteLine("А = 1, Б = 2");
+                            break;
+                    }
+                } //if (input == 0) break;
+                while (flag_switch);
+                {
+                    Console.WriteLine(" пока пока для продолжения нажмит любую клавишу");
+                    Console.ReadKey();
+                }
 
             }
-            else if (I >= 18.5 && I < 25) { Console.WriteLine("Нормальный вес"); }
-            else if (I >= 25 && I < 30)
+            #region dz1_a
+            static void dz1_a()
             {
-                Console.WriteLine("Избыточный вес");
-                //i_id = 25 - I;
-                //i_id_up = 18.5 - I;
-                //we_1 = i_id * (Math.Pow(high / 100, 2));
-                //we_2 = i_id_up * (Math.Pow(high / 100, 2));
-                we_1 = we_1 + we_2;
-                we_2 = we_1 - we_2;
-                we_1 = we_1 - we_2;
-                we_1 = -we_1;
-                we_2 = -we_2;
-               
-                Console.WriteLine("Вам стоит сбросить минимум " + we_1 + " кг для нормального веса. но не больше  " + we_2);
+                Console.Clear();
+                Console.Title = ("задача 1-а ");
+                strukura comp3; // мы объявляем какойто комлекс числа, в виде структуры и оно должно получить хоть какоето значение в данном примере
+                comp3.im = 1; // сообщаем числу comp3, часть im  - im это переменная , мы почемуто её не объявили раньше, а объявим в структуре
+                comp3.re = 1;  // сообщаем числу comp3, часть re  - re это переменная , и мы дали ей значение
+                Console.WriteLine($"comp3 = {comp3.im} + {comp3.re}i");
+
+                strukura complex2 = new strukura(2, 2);
+                // дописал  public Complex(double IM, double RE)
+                //{
+                //    this.im = IM;
+                //    this.re = RE;
+                //}
+                /* strukura complex2; // объявляем другой комлес числа
+                 complex2.re = 2;
+                 complex2.im = 2;*/
+
+                strukura result = comp3.minus(complex2); // сразу объявляем структуру result  и даем = comp3 и вызываем к нему метод минус от complex2 
+
+                // по заданию, нам остается продемонстрировать как почситается комплес, но комлекс надо еще представить в виде строки пишим метод
+
+                Console.WriteLine($"complex3 = {comp3} - {complex2}");
+                Console.WriteLine($"complex2 = {complex2.im} + {complex2.re}i"); // надо обработать ту стринг
+
+                Console.WriteLine($"результат вычитания комплексных чисел посредством структуры = {result.im} + {result.re}i"); // ту стринг метод нужен?
+
+                Console.WriteLine(result.ToString());
+
+                Console.ReadKey();
             }
-            else if (I >= 30 && I < 35)
+            #endregion
+            #region dz1_b
+            static void dz1_b()
             {
-                Console.WriteLine("Ожирение I степени");
-                //i_id = 25 - I;
-                //i_id_up = 18.5 - I;
-                //we_1 = i_id * (Math.Pow(high / 100, 2));
-                //we_2 = i_id_up * (Math.Pow(high / 100, 2));
-                //we_1 = -we_1;
-                //we_2 = -we_2;
-                we_1 = we_1 + we_2;
-                we_2 = we_1 - we_2;
-                we_1 = we_1 - we_2;
-                we_1 = -we_1;
-                we_2 = -we_2;
-                Console.WriteLine("Вам стоит сбросить минимум " + we_1 + " кг для нормального веса. но не больше  " + we_2);
-            }
-            else if (I >= 35 && I < 40)
-            {
-                Console.WriteLine("Ожирение II степени");
-                //i_id = 25 - I;
-                //i_id_up = 18.5 - I;
-                //we_1 = i_id * (Math.Pow(high / 100, 2));
-                //we_2 = i_id_up * (Math.Pow(high / 100, 2));
-                //we_1 = -we_1;
-                //we_2 = -we_2;
-                we_1 = we_1 + we_2;
-                we_2 = we_1 - we_2;
-                we_1 = we_1 - we_2;
-                we_1 = -we_1;
-                we_2 = -we_2;
-                Console.WriteLine("Вам стоит сбросить минимум " + we_1 + " кг для нормального веса. но не больше  " + we_2);
-            }
-            else if (I >= 40)
-            {
-                Console.WriteLine("Ожирение III степени");
-                //i_id = 25 - I;
-                //i_id_up = 18.5 - I;
-                //we_1 = i_id * (Math.Pow(high / 100, 2));
-                //we_2 = i_id_up * (Math.Pow(high / 100, 2));
-                //we_1 = -we_1;
-                //we_2 = -we_2;
-                we_1 = we_1 + we_2;
-                we_2 = we_1 - we_2;
-                we_1 = we_1 - we_2;
-                we_1 = -we_1;
-                we_2 = -we_2;
-                Console.WriteLine("Вам стоит сбросить минимум " + we_1 + " кг для нормального веса. но не больше  " + we_2);
-            }
-            else { Console.WriteLine("неведомая зверушка"); }
+                Console.Clear();
+                Console.Title = ("задача 1-б");
+                Complex_cl complex1 = new Complex_cl();
+                complex1.re = 1;
+                complex1.im = 1;
+                Console.WriteLine($"complex1 = {complex1.re} + {complex1.im}i");
 
 
-        }
+                Complex_cl complex2 = new Complex_cl();
+                complex2.re = 2;
+                complex2.im = 2;
+                Console.WriteLine($"complex2 = {complex2.re} + {complex2.im}i");
+
+                Complex_cl result = complex1.umojil(complex2); // перезапишем resulrs он же complex3 
+                Console.WriteLine($"complex3 = {result.re} + {result.im}i");
+                Console.WriteLine($"({complex1.im} + {complex1.re}i) * ({complex2.im} + {complex2.re}i) = complex3 = {result.re} + {result.im}i");
+                Console.WriteLine($"результат умножения комплексных чисел посредством класса = ({complex1.im} + {complex1.re}i) * ({complex2.im} + {complex2.re}i) = complex3 = {result.re} + {result.im}i");
+                Console.WriteLine(result.ToString());
+                Console.ReadKey();
+                // в конец запутался но вроде реализовал формулу
+            }
+            #endregion
+            #endregion
+            #region задание 2 С клавиатуры вводятся числа, пока не будет введён 0 (каждое число в новой строке). Требуется подсчитать сумму всех нечётных положительных чисел. 
 
             /// <summary>
-            /// вот и задание под В, ну или я не правильно понял, создаю метод about
+            /// С клавиатуры вводятся числа, пока не будет введён 0 (каждое число в новой строке). Требуется подсчитать сумму всех нечётных положительных ЦЕЛЫХ чисел.
             /// </summary>
-            static void about(string ms, int x, int y)
+            static void dz2()
             {
-                Console.SetCursorPosition(x, y);
-                Console.WriteLine(ms);
-                //return first_name;
+
+                Console.Title = ("2.	С клавиатуры вводятся числа, пока не будет введен 0. ");
+                double score = 0;
+                double input = 0;
+                double into = 0;
+                bool flag = false;
+
+
+                while (true) // Вечный цикл
+                {
+                    while (!flag)
+                    {
+                        Console.Clear(); // Чистим консоль.
+                        Console.WriteLine($"Сумма всех чисел = {score}"); // Вывод суммы чисел.
+                        Console.Write("Повторите ввод числа: "); // Вывод сообщения.
+
+                        flag = double.TryParse(Console.ReadLine(), out input); // Защита от дурака // try parse то что я искал // out input записывает в input
+                        if (input > 0 && input % 2 == 1) // делаем условие проверка на нечет и положительное
+                            into = input; // если условие выполнено, записываем введенное число, дальше мы его сложим
+                        else
+                            into = 0; // условие не выполнено, даем введенному значению 0 и не пытаемся trytoparse
+                    }
+
+                    flag = false; // Избавляемся от бага. // запомни это  // баг когда вводим double
+                    score = score + into; // Прибавляем к сумме чисел новое число прошедшее условие проверки на + и нечет
+
+                    if (input == 0) break; // Выход из вечного цикла:
+                }
+
+                Console.Clear(); // Чистим консоль.
+                Console.WriteLine($"Итоговая сумма всех чисел: {score}"); // Вывод итоговой суммы чисел.
+                Console.ReadKey(); // Ждём нажатие клавиши.
             }
-        #endregion
-        #region 6 задание
-        /// <summary>
-        ///  6. *Написать программу подсчета количества «хороших» чисел в диапазоне от 1 до 1 000 000 000. 
-        /// «Хорошим» называется число, которое делится на сумму своих цифр. Реализовать подсчёт времени выполнения программы, используя структуру DateTime.
-        /// </summary>
-        static void dz6()
+
+            #endregion
+            #region задание задача 3 , числители знаменатели дроби
+            /// <summary>
+            ///3.	*Описать класс дробей — рациональных чисел, являющихся отношением двух целых чисел. Предусмотреть методы сложения, вычитания, умножения и деления дробей.
+            /// Написать программу, демонстрирующую все разработанные элементы класса.
+            /// </summary>
+            static void dz3(string first_name, string last_name)
             {
-            Console.Clear();
-            /*
-            Console.WriteLine("Сейчас мы займемся счетом хороших чисел в указанном диапазоне, изначально по условиям диапазон я задавал сам, но я дамю возможность изменить диапазон проверяющему");
-            Console.WriteLine("Введите число, от которого мы будем считать хорошие числа");
-            int x_start = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Введите число, до которого мы будем считать хорошие числа");
-            int x_end = Convert.ToInt32(Console.ReadLine());
-            */
-            Console.WriteLine("Подождите, идёт подсчёт количества 'хороших' чисел в заданном диапазоне");
-            Console.WriteLine("Время начала операции " + DateTime.Now);
-            
-            int start_timer = DateTime.Now.Second;  // записываем время начала счета в переменную
+                /*double chislitel;
+                int znamenatel;
+                bool x;
+                Console.Clear();
+                Console.Title = ("задача 3 , числители знаменатели дроби");
+                Drob drob1 = new Drob();
+                Console.WriteLine($"Привет, сейчас мы будем складывать, умножать,делить, вычитать ДРОБИ" +
+                    $"Введи числитель:");
+                flag = int.TryParse(Console.ReadLine(), out drob1.up_str); // Защита от дурака // try parse то что я искал // out input записывает в input
+               // drob1.up_str = 1;
+                drob1.down_str = 1;
+                Console.WriteLine($"complex1 = {chislitel.up_str}^ " +
+                    $"| {drob1.down_str}down");*/
+                bool flag_drob;
+                Console.Clear();
+                Console.Title = ("задача 3");
+                Drob drob1 = new Drob();
+                drob1.up_str = 1;
+                Console.WriteLine($"Привет, сейчас мы будем складывать, умножать,делить, вычитать ДРОБИ ");
+                Console.WriteLine($"Введи числитель:");
+                flag_drob = int.TryParse(Console.ReadLine(), out drob1.up_str);
+                drob1.down_str = 1;
+                int input_z = 0;
 
-            Console.SetCursorPosition(0, 10); Console.Write("Обрабатывается число: ");
-            Console.SetCursorPosition(0, 11); Console.Write("Найдено: ");
+                // нужна проверка на ввод знаменатель !=0
+                Console.WriteLine($"Введи знаменатель:");
+                while (true) // Вечный цикл
+                {
+                    flag_drob = int.TryParse(Console.ReadLine(), out input_z); // Защита от дурака // try parse то что я искал // out input записывает в input / если аут сработает сообщит тру во флаг
 
-            var GoodNum = 0; // объявляем хорошие числа
-            int range = 1_000_000_000; // до какого числа считаем
-            bool flag_stop = !true;
+                    while (!flag_drob) // переворачиваем условие если тру то будет фалс
+                    {
 
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            for (var gn_first = 1; gn_first <= range; gn_first++) // делаем бесконечный цикл 
-                                                                  // (var gn_first = 1; задаем значение точка старта счета
-                                                                  //gn_first <= range;  будет считать пока не меньше либо равно 
-                                                                  // gn_first++) : каждый раз выполняя цикл , мы меняем значение gn_first на + 1
-            {
-                Console.SetCursorPosition(23, 10); Console.Write(gn_first); // пишем какое число сейчас у нас в gn_first
+                        if (input_z != 0) // делаем условие проверка на не равно нулю
+                            drob1.down_str = input_z; // если условие выполнено, записываем введенное число в класс drob1.down_str
+                        else              // условие не выполнено, даем введенному значению 0 и не пытаемся trytoparse
+                            input_z = 0; // условие не выполнено, даем введенному значению 0 и не пытаемся trytoparse
+                        Console.WriteLine("");
+                        Console.WriteLine("Повторите ввод числа: "); // Вывод сообщения. если пробел сообщить
 
-                // делаем если и вызываем метод который в случае выполнения даст нам GoodNum + 1 и выведет на экран полученное в заданном месте
-                // Console.SetCursorPosition(10, 5); Console.Write(GoodNum); 
+                        flag_drob = int.TryParse(Console.ReadLine(), out input_z); // Защита от дурака // try parse то что я искал // out input записывает в input
+                        break;
+                    }
 
-                if (GoodNumCheck(gn_first)) { GoodNum++; Console.SetCursorPosition(10, 11); Console.Write(GoodNum);
-                    //Console.ReadKey();
+                    flag_drob = !false; // Избавляемся от бага. // запомни это  // баг когда вводим double
+                    // score = score + into; // Прибавляем к сумме чисел новое число прошедшее условие проверки на + и нечет 
+                                        
+                    drob1.down_str = input_z; 
+                    if (input_z != 0)
+                    {
+                        Console.SetCursorPosition(0, 3);
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine("ArgumentException(вы устранили конфликт - знаменатель не может быть равен 0) || на 0 делить нельзя"); // Вывод сообщения
+                        Console.ForegroundColor = ConsoleColor.White;
+                        break;
+                    } // Выход из вечного цикла:
+                    else if (input_z == 0)
+                        Console.SetCursorPosition(0, 3);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("ArgumentException(Знаменатель не может быть равен 0) || введите корректное значение: "); // Вывод сообщения. // Выход из вечного цикла:
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
                 
-               //else if (flag_stop == !true) break;
-            } 
-            //////////////////////////////////////////////////////////
-            ///
-            Console.SetCursorPosition(23, 10); Console.Write(range);
-            Console.SetCursorPosition(10, 11); Console.Write(GoodNum);
-            Console.WriteLine();
-            Console.WriteLine();
-            start_timer =  start_timer - DateTime.Now.Second; // посчитаем сколько времени мы потратили на выполнение цикла где делали 
-            //gn_first + 1 пока не <= range 
+                /* Console.WriteLine($"Введи знаменатель:");
+                 flag_drob = int.TryParse(Console.ReadLine(), out drob1.down_str);
+                /* if (input > 0 && input % 2 == 1) // делаем условие проверка на нечет и положительное
+                     into = input; // если условие выполнено, записываем введенное число, дальше мы его сложим
+                 else
+                     into = 0; // условие не выполнено, даем введенному значению 0 и не пытаемся trytoparse
+             }*/
+                Console.WriteLine($"chislitel  =_{drob1.up_str}_ | ");
+                Console.WriteLine($"znamenatel = {drob1.down_str}  | ");
+                Console.WriteLine($"");
+                Console.WriteLine($"сразу сократим дробь = {drob1.up_str}/{drob1.down_str} до ");
+                if (drob1.up_str > 0)
+                {
+                    Console.WriteLine($"сокращенная дробь = {drob1.up_str}/{drob1.down_str} ");
+                    int chislitel = Convert.ToInt32(drob1.up_str);
+                    int znamenatel = Convert.ToInt32(drob1.down_str);
+                    drob1.up_str = chislitel / NOD(chislitel, znamenatel);
+                    drob1.down_str = znamenatel / NOD(chislitel, znamenatel);
 
-            Console.WriteLine("Время окончания операции " + DateTime.Now); 
-            Console.WriteLine("Потрачено секунд на выполнение: " + start_timer);
-
-                       NextPart();
-            
-        }
-        private static bool GoodNumCheck(int x_metha) // метод который определит число хорошее или нет
-                                                // у нас есть условие if (GoodNumCheck(gn_first)) 
-                                                // этим условием мы берем значение gn_first и ставим его в x_metha
-        {
-
-            // «Хорошим» называется число, которое делится на сумму своих цифр.
-            var good = false; 
-            var holder = x_metha; // на каждый вызов метода  x_metha будет меняться // но и мы перезапишем холдер
-            var sum_6 = 0; // сумма чисел
-            var a = 0;
-            do
-            {
-                a = x_metha % 10; // % это логическая операция остаток от деления в данном случае остаток от деления на 10
-                // мы начинаем считать хорошие числа от 0 поэтому даем 0 -  var sum_6 = 0;
-                // считаем первую сумму потом будем делить на неё
-
-
-                sum_6 = sum_6 + a; // получаем значение второго символа
-
-                x_metha = x_metha / 10; // получаем десятки
-            } while (x_metha >= 1); // будем гонять цикл пока первый сивол не бут =1
-            if (holder % sum_6 == 0) { good = true; } // если число которое мы запомнили до того как начали гонять цикл делится без остатка на крайний знак перед нулем // остаток от числа x_metha / значит число хорошее
-            return good;
-        }
-        private static void NextPart()
-        {
-            Console.ReadKey();
-            Console.WriteLine("Нажмите любую клавишу, чтобы продолжить:");
-            Console.Clear();
-            
-        }
-        #endregion
-        #region bonus
-        static void bonus()
-            {
-                Console.Title = ("иди отсюда пока не поздно");
-                Console.WriteLine("Вот и зачем ты нажал 7? это недостроенный бонусный уровень, как тебя зовут?");
-                string u_name = Console.ReadLine();
-                // Console.WriteLine("пока пока " + u_name + " кликни чтонибудь для возврата в меню и не возвращайся");
-
-
-                Console.WriteLine("Привет " + u_name + " я попрошу ввести тебя число со знаком после запятой, к примеру 11,1233 , и мы попрубуем округлить число в большую и меньшую сторону. " +
-                    "а затем конвертировать значение в новые переменные и затем объявить их" + "");
-
-                Console.WriteLine("{0,5} {1,20:R}  {2,12} {3,15}\n",
-                            "Value", "Full Precision", "ToEven",
-                            "AwayFromZero");
-                double value = 11.1;
-                /* double znachenie = Convert.ToDouble(Console.ReadLine()); */
-
-            for (int ctr = 0; ctr <= 5; ctr++)
-                    value = RoundValueAndAdd(value);
-
-                Console.WriteLine();
-
-                value = 11.5;
-                RoundValueAndAdd(value);
-
-
-                /* ZnachenieM(znachenie);
-                Console.WriteLine("{0,5:N1} {0,20:R} MidpointRounding.ToEven  || {1,12} {2,15} znachenie, MidpointRounding.AwayFromZero",
-                                  znachenie, Math.Round(znachenie, MidpointRounding.ToEven),
-                                  Math.Round(znachenie, MidpointRounding.AwayFromZero));*/
+                }
+                else if (drob1.up_str == 0)
+                {
+                    Console.WriteLine($"первое число 0, как изащренно ты ввел 0, надо же было додуматься {drob1.up_str} из {drob1.down_str} = 0");
+                }
+                Console.WriteLine($"");
 
 
 
-                /* // Я вроде разобрался с округлениями, сейчас напишу программу, которая округлит 0,5 в большую сторону и в меньшую сторону*/
+                Console.WriteLine($"А сейчас введем вторую дробь ");
 
-                Console.Write("Привет, введи число 16,5 или 17,5 я его округлю в большую сторону и в меньшую");
-                double znachenie = Convert.ToDouble(Console.ReadLine());
-                Console.WriteLine("{0,0:N0} {1,12}",
-                                   znachenie, Math.Round(znachenie, MidpointRounding.ToEven),
-                                   Math.Round(znachenie, MidpointRounding.AwayFromZero));
-                // осталось понять как сохранить полученные результаты как int 32
-            }
-
-            private static double RoundValueAndAdd(double value) // пробовал зачемто выполнять внутри этого метода манипуляции со znachenie, щас пишу новый метод
-            {
-                Console.WriteLine("{0,5:N1} {0,20:R} {0,0:N0} {1,12} {2,15}",
-                                  value, Math.Round(value, MidpointRounding.ToEven),
-                                  Math.Round(value, MidpointRounding.AwayFromZero));
-                return value + .1; // 
-            }
-
-            private static double ZnachenieM(double znachenie) // пробовал зачемто выполнять внутри этого метода манипуляции со znachenie, щас пишу новый метод
-            {
-                Console.WriteLine("{0,5:N1} {0,20:R} {0,0:R}  {1,12} {2,15}",
-                                  znachenie, Math.Round(znachenie, MidpointRounding.ToEven),
-                                  Math.Round(znachenie, MidpointRounding.AwayFromZero));
-                return znachenie + .1;
-            }
-        /*class arttem //создал класс внутри класса щас методы буду изучать принт и пауза
-        {
-
-        }*/
-        #endregion
-
-        #region задание 7
-        // 6 заданий позади 
-        static void dz7()
-        {
-            Console.WriteLine("tocheck");
-            PrintNumber(1, 12);
-            Console.WriteLine("мы видим результат PrintNumber(1, 12);");
-            Console.WriteLine("рекурсивный метод, который выводит на экран числа от a до b(a<b).");
-            Console.WriteLine("Нажми любую клавишу чтобы увидеть SumNumber(1, 5)");
-            Console.ReadKey();
-            SumNumber(1, 5);
-            Console.WriteLine("это рекурсивный метод, который считает сумму чисел от a до b.");
-
-        }
-        /// <summary>
-        /// Станислав спасибо, сейчас вызову эти методы в dz7 // 
-        /// Разработать рекурсивный метод, который выводит на экран числа от a до b(a<b). 
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        static void PrintNumber(int a, int b)
-        {
-            if (a <= b)
-            {
-                Console.WriteLine(a);
-                a++;
-                PrintNumber(a, b);
-            }
-        }
-        /// <summary>
-        /// Разработать рекурсивный метод, который считает сумму чисел от a до b.
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <returns></returns>
-        static int SumNumber(int a, int b)
-        {
-            if (a <= b)
-            {
-                Console.WriteLine($"{a} + {b} = {a+b}"); // добавим в консоль отображение функции
-                var sum = SumNumber(a + 1, b);
-                return a + sum;
+                Drob drob2 = new Drob();
+                Console.WriteLine($"Привет, сейчас мы будем складывать, умножать,делить, вычитать ДРОБИ ");
+                Console.WriteLine($"Введи числитель:");
+                flag_drob = int.TryParse(Console.ReadLine(), out drob2.up_str);
                 
+                Console.WriteLine($"Введи знаменатель:");
+
+                //проверка на не 0
+                while (true) // Вечный цикл
+                {
+                    flag_drob = int.TryParse(Console.ReadLine(), out input_z); // Защита от дурака // try parse то что я искал // out input записывает в input
+
+                    while (!flag_drob)
+                    {
+
+                        if (input_z != 0) // делаем условие проверка на нечет и положительное
+                            drob1.down_str = input_z; // если условие выполнено, записываем введенное число, дальше мы его сложим
+
+                        else
+                            input_z = 0; // условие не выполнено, даем введенному значению 0 и не пытаемся trytoparse
+                        Console.WriteLine("");
+                        Console.WriteLine("Повторите ввод числа: "); // Вывод сообщения.Вывод сообщения. если пробел сообщить
+
+                        flag_drob = int.TryParse(Console.ReadLine(), out input_z); // Защита от дурака // try parse то что я искал // out input записывает в input
+                        break;
+                    }
+
+                    flag_drob = !false; // Избавляемся от бага. // запомни это  // баг когда вводим double
+                    // score = score + into; // Прибавляем к сумме чисел новое число прошедшее условие проверки на + и нечет
+                    drob2.down_str = input_z;
+                    if (input_z != 0)
+                    {
+                        Console.SetCursorPosition(0, 11);
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine("ArgumentException(вы устранили конфликт - знаменатель не может быть равен 0) || на 0 делить нельзя"); // Вывод сообщения
+                        Console.ForegroundColor = ConsoleColor.White;
+                        break;
+                    }// Выход из вечного цикла:
+                    else if (input_z == 0)
+                        Console.SetCursorPosition(0, 11);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("ArgumentException(Знаменатель не может быть равен 0) || введите корректное значение: "); // Вывод сообщения. // Выход из вечного цикла:
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                // конец проверки
+
+                // flag_drob = int.TryParse(Console.ReadLine(), out drob2.down_str);
+                Console.WriteLine($"chislitel  =_{drob2.up_str}_ | ");
+                Console.WriteLine($"znamenatel = {drob2.down_str}  | ");
+
+                Console.WriteLine($"");
+                Console.WriteLine($"сразу сократим дробь = {drob2.up_str}/{drob2.down_str} до ");
+                if (drob2.up_str > 0)
+                {
+                    int chislitel_2 = Convert.ToInt32(drob2.up_str);
+                    int znamenatel_2 = Convert.ToInt32(drob2.down_str);
+                    drob2.up_str = chislitel_2 / NOD(chislitel_2, znamenatel_2);
+                    drob2.down_str = znamenatel_2 / NOD(chislitel_2, znamenatel_2);
+                    Console.WriteLine($"сокращенная дробь = {drob2.up_str}/{drob2.down_str} ");
+                }
+                else if (drob2.up_str == 0)
+                {
+                    Console.WriteLine($"второе число 0, как изащренно ты ввел 0, надо же было додуматься {drob2.up_str} из {drob2.down_str} = 0");
+                }
+                Console.WriteLine($"");
+
+                // начинаем операции они же методы сложения итд
+
+                Drob result_plus = drob1.Plus(drob2); // перезапишем result_plus на уровне класса от значений которые мы передали в класс
+
+                Console.WriteLine($"результат сложения числитель  = {drob1.up_str}  +  {drob2.up_str}  =  {result_plus.up_str}");
+                Console.WriteLine($"результат сложения знаменател = {drob1.down_str}     {drob2.down_str}  =  {result_plus.down_str}  ||  {result_plus.up_str}/{result_plus.down_str}  || " +
+                    $" НОД числителя и знаменателя {NOD(result_plus.up_str, result_plus.down_str) } =  {result_plus.up_str / NOD(result_plus.up_str, result_plus.down_str)}/{result_plus.down_str / NOD(result_plus.up_str, result_plus.down_str)}  ");
+                Console.WriteLine($"сокращенная дробь = {result_plus.up_str / NOD(result_plus.up_str, result_plus.down_str)}/{result_plus.down_str / NOD(result_plus.up_str, result_plus.down_str)}  ");
+                double plus_up = Convert.ToDouble(result_plus.up_str);
+                double plus_down = Convert.ToDouble(result_plus.down_str);
+                //Console.WriteLine($"результат сложения дробей в виде десятичной дроби = {result_plus.up_str} / {result_plus.down_str}  =  {result_plus.desyatki:f5}"); // так не считает // с инт округляет до ближайшего целого вниз
+                Console.WriteLine($"результат сложения дробей в виде десятичной дроби = {plus_up} / {plus_down}  =  {plus_up / plus_down}");
+                Console.WriteLine("НОД от числителя " + result_plus.up_str + " и знаменателя " + result_plus.down_str + " Получается = " + NOD(result_plus.up_str, result_plus.down_str));
+                Console.WriteLine($"");
+
+                // начинаем операции вычетания дробей
+                ///
+                /* тут начинается проблема когда числитель принимает 0 при вычетании*/
+                Drob result_minus = drob1.minus(drob2); // создадим result_minus на основе  класса Drob
+
+                Console.WriteLine($"результат вычетания числитель  = {drob1.up_str}  -  {drob2.up_str}  =  {result_minus.up_str}");
+                Console.WriteLine($"результат вычетания знаменател = {drob1.down_str}     {drob2.down_str}  =  {result_minus.down_str}  ||  {result_minus.up_str}/{result_minus.down_str} ");
+                Console.WriteLine($"сокращенная дробь = {result_minus.up_str / NOD(result_minus.up_str, result_minus.down_str)}/{result_minus.down_str / NOD(result_minus.up_str, result_minus.down_str)}  ");
+                double minus_up = Convert.ToDouble(result_minus.up_str);
+                double minus_down = Convert.ToDouble(result_minus.down_str);
+                Console.WriteLine($"результат вычетания дробей в виде десятичной дроби = {minus_up} / {minus_down}  =  {minus_up / minus_down}");
+                Console.WriteLine($"");
+
+                // начинаем операции деления дробей
+
+                Drob result_delen = drob1.del(drob2); // перезапишем resulrs он же result_minus 
+
+                Console.WriteLine($"результат деления числитель  = {drob1.up_str}  /  {drob2.up_str}  =  {result_delen.up_str}");
+                Console.WriteLine($"результат деления знаменател = {drob1.down_str}     {drob2.down_str}  =  {result_delen.down_str}  ||  {result_delen.up_str}/{result_delen.down_str} ");
+                Console.WriteLine($"сокращенная дробь = {result_delen.up_str / NOD(result_delen.up_str, result_delen.down_str)}/{result_delen.down_str / NOD(result_delen.up_str, result_delen.down_str)}  ");
+
+                double delen_up = Convert.ToDouble(result_delen.up_str);
+                double delen_down = Convert.ToDouble(result_delen.down_str);
+                Console.WriteLine($"результат деления дробей в виде десятичной дроби = {delen_up} / {delen_down}  =  {delen_up / delen_down}");
+                Console.WriteLine($"");
+
+
+                // начинаем операции умножения дробей
+
+                Drob result_umnogenie = drob1.umnog(drob2);
+                Console.WriteLine($"результат умножения числитель  = {drob1.up_str}  *  {drob2.up_str}  =  {result_umnogenie.up_str}");
+                Console.WriteLine($"результат умножения знаменател = {drob1.down_str}     {drob2.down_str}  =  {result_umnogenie.down_str}  ||  {result_umnogenie.up_str}/{result_umnogenie.down_str} ");
+                Console.WriteLine($"сокращенная дробь = {result_umnogenie.up_str / NOD(result_umnogenie.up_str, result_umnogenie.down_str)}/{result_umnogenie.down_str / NOD(result_umnogenie.up_str, result_umnogenie.down_str)}  ");
+                //if (result_umnogenie.up_str > 0 && result_umnogenie.down_str > 0) { 
+                //    result_umnogenie.down_str = Convert.ToInt32(Math.Sqrt((Math.Pow(result_umnogenie.down_str, 2))));
+                //    result_umnogenie.up_str = Convert.ToInt32(Math.Sqrt((Math.Pow(result_umnogenie.up_str, 2))));
+                 
+                //        }
+                double umnogenie_up = Convert.ToDouble(result_umnogenie.up_str);
+                double umnogenie_down = Convert.ToDouble(result_umnogenie.down_str);
+                Console.WriteLine($"результат умножения дробей в виде десятичной дроби = {umnogenie_up} / {umnogenie_down}  =  {umnogenie_up / umnogenie_down}");
+                Console.WriteLine($"");
+
+                /*
+                Console.WriteLine("Привет, сегодня мы попробуем вычеслить алгоритм Евклида. НОД - является наибольшим целым числом, которое может разделять два значения без остатка");
+                Console.ReadKey();
+                Console.SetCursorPosition(10, 15);
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Clear();
+                Console.Write("Введи первое число:");
+                int a = Convert.ToInt32(Console.ReadLine());
+                Console.SetCursorPosition(10, 15);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Clear();
+                Console.Write("Введи второе число:");
+                int b = Convert.ToInt32(Console.ReadLine());
+                Console.Clear();
+                Console.SetCursorPosition(10, 15);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("НОД от первого числа " + a + " и второго числа " + b + " Получается = " + NOD(a, b)); // выводит на экран результат выполнения метода от переменных A и B 
+                Console.ReadKey();
+            */
+
+
+
+                //CREDITS 
+                #region credits
+                Console.SetCursorPosition(13, 39);
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("Автор : " + first_name + " " + last_name);
+                Console.SetCursorPosition(10, 41);
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("THE FORCE BE WITH U... SEE YA LATER");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("AND WITH THE FORCE... I WILL REDUCE FRACTURE ");
+                Console.ForegroundColor = ConsoleColor.White;
+                #endregion
+                /* 
+
+                 Complex_cl result = complex1.umojil(complex2); // перезапишем resulrs он же complex3 
+
+                 Console.WriteLine($"complex3 = {result.re} + {result.im}i");
+
+                 Console.WriteLine($"({complex1.im} + {complex1.re}i) * ({complex2.im} + {complex2.re}i) = complex3 = {result.re} + {result.im}i");
+                 Console.WriteLine($"результат умножения комплексных чисел посредством класса = ({complex1.im} + {complex1.re}i) * ({complex2.im} + {complex2.re}i) = complex3 = {result.re} + {result.im}i");
+                 Console.WriteLine(result.ToString());*/
+                Console.ReadKey();
+                // в конец запутался но вроде реализовал формулу
             }
-            return 0;
+            static int NOD(int a, int b) // Описывает вычесления НОД от двух чисел // позже вызовем метод вычисления 1ой строкой
+            {
+                ////////////////////////////////////////////////// Проверка НОД по модулю числителя и знаменателя
+                if (a < 0 && b < 0)
+                {
+                    a = Convert.ToInt32(Math.Sqrt((Math.Pow(a, 2))));
+                    b = Convert.ToInt32(Math.Sqrt((Math.Pow(b, 2))));
+
+                }
+                else if(a < 0)
+                { // если меньше 0
+                    a = Convert.ToInt32(Math.Sqrt((Math.Pow(a, 2)))); // преобразуем в положительное
+                }
+                else if (a == b)
+                {
+                    a = Convert.ToInt32(Math.Sqrt((Math.Pow(1, 2))));
+                    b = Convert.ToInt32(Math.Sqrt((Math.Pow(1, 2))));
+                }
+                else if (b < 0)// если меньше 0
+                {// преобразуем в положительное
+                    b = Convert.ToInt32(Math.Sqrt((Math.Pow(b, 2))));
+                }
+                ///////////////////////////////////////////////////////////// конец проверки
+                while (a != b) // если а не равно б
+                    if (a > b) a = a - b; else b = b - a;
+                return a;
+            }
+
+            #endregion
+
+
+
         }
-        #endregion
     }
-
-
-    }
+}
