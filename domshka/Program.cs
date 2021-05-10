@@ -55,7 +55,10 @@ namespace domshka
                         case 6:
                             dz6();
                             break;
-                        case 7:
+                    case 7:
+                        dz7();
+                        break;
+                    case 8:
                             bonus();
                             break;
                     
@@ -614,11 +617,50 @@ namespace domshka
         // 6 заданий позади 
         static void dz7()
         {
-            Console.WriteLine();
-        
+            Console.WriteLine("tocheck");
+            PrintNumber(1, 12);
+            Console.WriteLine("мы видим результат PrintNumber(1, 12);");
+            Console.WriteLine("рекурсивный метод, который выводит на экран числа от a до b(a<b).");
+            Console.WriteLine("Нажми любую клавишу чтобы увидеть SumNumber(1, 5)");
+            Console.ReadKey();
+            SumNumber(1, 5);
+            Console.WriteLine("это рекурсивный метод, который считает сумму чисел от a до b.");
+
         }
-            #endregion
+        /// <summary>
+        /// Станислав спасибо, сейчас вызову эти методы в dz7 // 
+        /// Разработать рекурсивный метод, который выводит на экран числа от a до b(a<b). 
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        static void PrintNumber(int a, int b)
+        {
+            if (a <= b)
+            {
+                Console.WriteLine(a);
+                a++;
+                PrintNumber(a, b);
+            }
         }
+        /// <summary>
+        /// Разработать рекурсивный метод, который считает сумму чисел от a до b.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        static int SumNumber(int a, int b)
+        {
+            if (a <= b)
+            {
+                Console.WriteLine($"{a} + {b} = {a+b}"); // добавим в консоль отображение функции
+                var sum = SumNumber(a + 1, b);
+                return a + sum;
+                
+            }
+            return 0;
+        }
+        #endregion
+    }
 
 
     }
